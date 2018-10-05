@@ -1,5 +1,4 @@
 import React from "react";
-import Tepu from '../assets/water.png'
 
 const World = () => (
   <div style={{

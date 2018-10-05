@@ -1,5 +1,0 @@
-const Head = () => { /* Code */ }
-const Arms = ({ waving }) => {
-  /* Code */
-}
-const Legs = () => { /* Code */ }
