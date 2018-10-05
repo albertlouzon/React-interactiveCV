@@ -3,7 +3,7 @@ import { Loop, Stage, World } from "react-game-kit";
 
 const Game = ({ children }) => (
   <Loop>
-    <Stage width={499} height={600}>
+    <Stage width={900} height={600}>
       <World>
         {children}
       </World>

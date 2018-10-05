@@ -12,7 +12,8 @@ class Cannonball extends Component {
       x: props.x,
       y: props.y,
       isShooting: false,
-      visible: props.visible
+      visible: props.visible,
+      weapon : props.weapon
     };
 
     this.update = this.update.bind(this);
@@ -74,19 +75,37 @@ class Cannonball extends Component {
 
   render() {
     const { children } = this.props;
+    if(this.state.weapon == "left" ){
+      return (
+        <div style={{
+          display: (this.state.visible) ? "block" : "none",
+          position: "absolute",
+          left: this.state.x,
+          top: this.state.y,
+          backgroundImage: "url('../../assets/cannonball2.png')",    
+          backgroundSize: "contain",
+          width: 40,
+          height: 40 }}
+        >{children}</div>
+      );
 
-    return (
-      <div style={{
-        display: (this.state.visible) ? "block" : "none",
-        position: "absolute",
-        left: this.state.x,
-        top: this.state.y,
-        backgroundImage: "url('../../assets/cannonball2.png')",    
-        backgroundSize: "contain",
-        width: 40,
-        height: 40 }}
-      >{children}</div>
-    );
+    }
+    else {
+      return (
+        <div style={{
+          display: (this.state.visible) ? "block" : "none",
+          position: "absolute",
+          left: this.state.x,
+          bottom: this.state.y,
+          backgroundImage: "url('../../assets/cannonball2.png')",    
+          backgroundSize: "contain",
+          width: 40,
+          height: 40 }}
+        >{children}</div>
+      );
+
+    }
+   
   }
 }
 
