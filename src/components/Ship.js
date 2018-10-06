@@ -9,6 +9,7 @@ import KeyEvent from "./KeyEvent";
 import Input from "../Input"; 
 import {battleFeedback} from '../containers/batte-feedback'
 import { ennemyShipInfo } from "../containers/ennemy_ships";
+import { getPlayerPosition } from "../containers/player_position";
 
 const WIDTH = 120;
 const HEIGHT = 120;
@@ -23,8 +24,14 @@ class Ship extends Component {
       directionIndex: props.directionIndex,
       moveLeft: false,
       moveRight: true,
+      moveUp : false,
       hasPhysics: false,
-      hp:props.hp
+      hp:props.hp,
+      isTouchey : false,
+      playerDetected : false,
+      playerPosition : {},
+      webKitFilter: '',
+      filter : ''
     };
 
     this.update = this.update.bind(this);
@@ -63,6 +70,7 @@ class Ship extends Component {
     Matter.Events.on(this.context.engine, "afterUpdate", this.update);
   }
 
+  
   componentWillUnmount() {
     Matter.Events.off(this.context.engine, "afterUpdate", this.update);
 
@@ -72,6 +80,25 @@ class Ship extends Component {
 
   update() {
     const { onUpdate } = this.props;
+
+    if(this.state.isTouchey == true){
+      const filter = "brightness(2.5) hue-rotate(-60deg)";
+      this.setState({
+        webKitFilter : filter,
+        filter: filter,
+      })
+      setTimeout(() => {
+        this.setState({
+          isTouchey:false
+        })
+      }, 40);
+    }else { 
+      this.setState({
+        webKitFilter : '',
+        filter: ''
+      })
+    }
+
     if (this.state.hp == 0){
       this.setState({
         hp:'destroyed'
@@ -103,7 +130,9 @@ class Ship extends Component {
       backgroundSize: "cover",
       backgroundPosition: `0px ${this.state.directionIndex * (-HEIGHT)}px`,
       width: WIDTH,
-      height: HEIGHT
+      height: HEIGHT,
+      filter:this.state.filter,
+      webKitFilter : this.state.webKitFilter
     };
 
     React.Children.forEach(children, (child) => {
