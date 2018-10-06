@@ -7,6 +7,8 @@ import PhysicsBody from "./PhysicsBody";
 import Hit from "./Hit";
 import KeyEvent from "./KeyEvent";
 import Input from "../Input"; 
+import {battleFeedback} from '../containers/batte-feedback'
+import { ennemyShipInfo } from "../containers/ennemy_ships";
 
 const WIDTH = 120;
 const HEIGHT = 120;
@@ -21,7 +23,8 @@ class Ship extends Component {
       directionIndex: props.directionIndex,
       moveLeft: false,
       moveRight: true,
-      hasPhysics: false
+      hasPhysics: false,
+      hp:props.hp
     };
 
     this.update = this.update.bind(this);
@@ -69,7 +72,11 @@ class Ship extends Component {
 
   update() {
     const { onUpdate } = this.props;
-
+    if (this.state.hp == 0){
+      this.setState({
+        hp:'destroyed'
+      })
+    }
     if (onUpdate && typeof onUpdate === "function") {
       const onUpdateResult = onUpdate(this.state);
 
@@ -105,7 +112,6 @@ class Ship extends Component {
       }
 
       if (child.type === Hit) {
-        console.log('YA D HIt')
         const filter = "brightness(2.5) hue-rotate(-60deg)";
 
         styles.filter = filter;
@@ -117,6 +123,7 @@ class Ship extends Component {
           hasPhysics: true
         });
       }
+      else return null 
     });
 
     // if (this.state.hasPhysics) {
@@ -127,6 +134,7 @@ class Ship extends Component {
             ref={(b) => this.body = b }
           >
             <div>
+              {this.state.hp}
               {children}
             </div>
           </Body>

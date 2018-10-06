@@ -7,24 +7,21 @@ import {getPlayerPosition,cannonBallPosition,ennemyPosition} from '../player_pos
 import {battleFeedback} from '../batte-feedback'
 
 
-const isTouchey = 0
 
 export default class MainShip extends Component {
 
     
   render() {
     return (
-        <Ship x={10} y={10}>
+        <Ship x={10} y={10} hp={150}>
         <Cannonball x={40} y={40} visible={false} onUpdate={function (state) {
             if (state.isShooting) {
                 if (state.y <= -90) {
-                    console.log(battleFeedback)
                     if ( battleFeedback.Xsuccess == true  && battleFeedback.Ysuccess == true){
                         battleFeedback.XYsuccess = true
                         console.log('final touché')
                         battleFeedback.Xsuccess = false
                         battleFeedback.Ysuccess = false
-                        battleFeedback.XYsuccess = false
                     }else {
                         battleFeedback.Xsuccess = false
                         battleFeedback.Ysuccess = false
