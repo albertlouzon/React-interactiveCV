@@ -16,26 +16,27 @@ export default class MainShip extends Component {
         <Ship x={10} y={10} hp={150}>
         <Cannonball x={40} y={40} visible={false} onUpdate={function (state) {
             if (state.isShooting) {
+                if ( battleFeedback.Xsuccess == true  && battleFeedback.Ysuccess == true){
+                    battleFeedback.XYsuccess = true
+                    console.log('final touché')
+                    battleFeedback.Xsuccess = false
+                    battleFeedback.Ysuccess = false
+                    return { isShooting: false, visible: false };
+                }else {
+                    battleFeedback.Xsuccess = false
+                    battleFeedback.Ysuccess = false
+                }
                 if (state.y <= -90) {
-                    if ( battleFeedback.Xsuccess == true  && battleFeedback.Ysuccess == true){
-                        battleFeedback.XYsuccess = true
-                        console.log('final touché')
-                        battleFeedback.Xsuccess = false
-                        battleFeedback.Ysuccess = false
-                    }else {
-                        battleFeedback.Xsuccess = false
-                        battleFeedback.Ysuccess = false
-                    }
                     return { isShooting: false, visible: false };
                 } else {
-                    cannonBallPosition.x = getPlayerPosition.x
-                    cannonBallPosition.y = getPlayerPosition.y +  state.y - ennemyPosition.y
-                 
-                    if(cannonBallPosition.y >= ennemyPosition.y -3 && cannonBallPosition.y <= ennemyPosition.y + 3){
+                    cannonBallPosition.x = getPlayerPosition.x 
+                    cannonBallPosition.y = getPlayerPosition.y +  state.y 
+                    console.log('tepu: ', cannonBallPosition.x - ennemyPosition.x )
+                    if(cannonBallPosition.y -ennemyPosition.y <= 70){
                         battleFeedback.Ysuccess = true
                     }
 
-                    if(cannonBallPosition.x >= ennemyPosition.x -3 && cannonBallPosition.x <= ennemyPosition.x +3){
+                    if(cannonBallPosition.x - ennemyPosition.x >=  -30 && cannonBallPosition.x -ennemyPosition.x<= 25){
                         battleFeedback.Xsuccess = true
                     }
                     return { y: state.y - 3 };

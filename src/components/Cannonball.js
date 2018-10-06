@@ -83,8 +83,8 @@ class Cannonball extends Component {
           top: this.state.y,
           backgroundImage: "url('../../assets/cannonball2.png')",    
           backgroundSize: "contain",
-          width: 40,
-          height: 40 }}
+          width: 30,
+          height: 30 }}
         >{children}</div>
       );
 
@@ -98,8 +98,8 @@ class Cannonball extends Component {
           bottom: this.state.y,
           backgroundImage: "url('../../assets/cannonball2.png')",    
           backgroundSize: "contain",
-          width: 40,
-          height: 40 }}
+          width: 30,
+          height: 30 }}
         >{children}</div>
       );
 
