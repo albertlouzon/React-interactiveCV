@@ -19,6 +19,7 @@ class Ship extends Component {
     super(props);
 
     this.state = {
+      id : this.props.id,
       x: props.x,
       y: props.y,
       directionIndex: props.directionIndex,
@@ -80,7 +81,6 @@ class Ship extends Component {
 
   update() {
     const { onUpdate } = this.props;
-
     if(this.state.isTouchey == true){
       const filter = "brightness(2.5) hue-rotate(-60deg)";
       this.setState({
