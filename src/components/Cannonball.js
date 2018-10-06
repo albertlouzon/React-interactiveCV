@@ -61,7 +61,6 @@ class Cannonball extends Component {
 
   update() {
     const { onUpdate } = this.props;
-
     if (onUpdate && typeof onUpdate === "function") {
       const onUpdateResult = onUpdate(this.state);
 

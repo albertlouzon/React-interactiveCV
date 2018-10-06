@@ -5,21 +5,22 @@ import Background from '../components/Background'
 import BlackFlag from '../components/BlackFlag'
 import KeyEvent from '../components/KeyEvent'
 import AnimatedPirateShip from '../components/AnimatedPirateShip'
-import Cannonball from '../components/Cannonball'
-
-import Key from '../Key'
 import MainShip from './player_ships/main_ship';
-
+import {ennemyPosition} from './player_position'
 
 
 export default class FinalGame extends Component {
     render() {
         return (
             <Game>
-                <Background />
+
+                <Background />  
+            
                 <MainShip/>
                 
                 <Ship x={200} y={100} onUpdate={function (state) {
+                    ennemyPosition.x = state.x
+                    ennemyPosition.y = state.y
                     if (state.x >= 300 && state.moveRight) {
                         return {
                             moveLeft: true,

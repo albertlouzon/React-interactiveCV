@@ -1,9 +1,11 @@
 import React from "react";
-import { Loop, Stage, World } from "react-game-kit";
+import { Loop, Stage, World, TileMap } from "react-game-kit";
+
+
 
 const Game = ({ children }) => (
   <Loop>
-    <Stage width={900} height={600}>
+    <Stage width={1024} height={800}>
       <World>
         {children}
       </World>
