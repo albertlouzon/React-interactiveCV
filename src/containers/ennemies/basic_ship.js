@@ -19,6 +19,7 @@ export default class BasicShip extends Component {
 
 
   render() {
+    
     return (
         <Ship x={this.props.x} y={this.props.y} hp={100} id={this.state.id}
         onUpdate={function (state) {
@@ -26,19 +27,17 @@ export default class BasicShip extends Component {
              state.playerPosition.y= getPlayerPosition.y 
           
                 ennemyShipInfo.hp = state.hp
-                ennemyPosition.x1 = state.x
-                ennemyPosition.y1 = state.y
-            
-            
-            console.log(ennemyPosition)
-            
+                
+                let shipLocation = [state.x, state.y]
+                ennemyPosition[state.id] = shipLocation
+                // console.log('ennemy position test : ', ennemyPosition)
            if (getPlayerPosition.x - state.x < 250  &&  getPlayerPosition.x - state.x > -250 &&  getPlayerPosition.y - state.y > -250 &&  getPlayerPosition.y - state.y < 250 ){
                state.playerDetected = true
                //player is spotted
            }
          
            //ship is touchey    
-            if(battleFeedback.XYsuccess==true && state.hp > 0){ 
+            if(battleFeedback.XYsuccess==true && state.hp > 0 && battleFeedback.shipId==state.id){ 
                 state.hp = state.hp - 10
                 state.isTouchey = true
                 battleFeedback.XYsuccess = false
@@ -48,7 +47,6 @@ export default class BasicShip extends Component {
                 return {
                     moveLeft: true,
                     moveRight: false,
-                    
                 }
             }
 

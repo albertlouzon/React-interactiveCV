@@ -20,11 +20,12 @@ export default class FinalGame extends Component {
         return (
 
             <Game>
-
                 <Background />  
                 <MainShip/>
-                <BasicShip id={1} x={400} y={200}/>
-                <CopyShip id={1} x={650} y={660}/>
+                <BasicShip id={0} x={400} y={200}/>
+                <BasicShip id={1} x={555} y={555}/>
+                <BasicShip id={2} x={50} y={125}/>
+
             </Game>
 
 

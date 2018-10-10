@@ -15,6 +15,7 @@ export default class MainShip extends Component {
         return (
             <Ship x={10} y={10} hp={150}>
                 <Cannonball x={40} y={40} visible={false} onUpdate={function (state) {
+                
                     if (state.isShooting) {
                         if (battleFeedback.Xsuccess == true && battleFeedback.Ysuccess == true) {
                             battleFeedback.XYsuccess = true
@@ -30,44 +31,42 @@ export default class MainShip extends Component {
                             return { isShooting: false, visible: false };
                         } else {
                             cannonBallPosition.x = getPlayerPosition.x
-   
-                            console.log('tepu: ', cannonBallPosition.y - ennemyPosition.y1)
-
                             if (state.weapon === 'left') {
                                 cannonBallPosition.y = getPlayerPosition.y + state.y
 
                                 battleFeedback.Xsuccess = false
                                 battleFeedback.Ysuccess = false
 
-                                if (cannonBallPosition.y - ennemyPosition.y1 <= 70 && cannonBallPosition.y - ennemyPosition.y1 >= 50) {
-                                    battleFeedback.Ysuccess = true
-                                    if (cannonBallPosition.x - ennemyPosition.x1 >= -30 && cannonBallPosition.x - ennemyPosition.x1 <= 25) {
-                                        battleFeedback.Xsuccess = true
+                                for(var ship in ennemyPosition){
+                                    if (cannonBallPosition.y - ennemyPosition[ship][1] <= 70 && cannonBallPosition.y - ennemyPosition[ship][1]  >= 50) {
+                                        battleFeedback.Ysuccess = true
+                                        if (cannonBallPosition.x - ennemyPosition[ship][0]  >= -30 && cannonBallPosition.x - ennemyPosition[ship][0]  <= 25) {
+                                            battleFeedback.Xsuccess = true
+                                            battleFeedback.shipId = ship
+                                        }
                                     }
-                                }else   if (cannonBallPosition.y - ennemyPosition.y2 <= 70 && cannonBallPosition.y - ennemyPosition.y2 >= 50) {
-                                    battleFeedback.Ysuccess = true
-                                    if (cannonBallPosition.x - ennemyPosition.x2 >= -30 && cannonBallPosition.x - ennemyPosition.x2 <= 25) {
-                                        battleFeedback.Xsuccess = true
-                                    }
+
+
                                 }
+                                
+                                
 
                             }  if (state.weapon === 'right') {
                                 cannonBallPosition.y = getPlayerPosition.y - state.y
-
                                 battleFeedback.Xsuccess = false
                                 battleFeedback.Ysuccess = false
-                                if (cannonBallPosition.y - ennemyPosition.y1 >= -95 && cannonBallPosition.y - ennemyPosition.y1 <= -75) {
-                                    battleFeedback.Ysuccess = true
+                                for(var ship in ennemyPosition){
+                                    if (cannonBallPosition.y - ennemyPosition[ship][1] >= -95 && cannonBallPosition.y - ennemyPosition[ship][1] <= -75) {
+                                        battleFeedback.Ysuccess = true
+    
+                                        if (cannonBallPosition.x - ennemyPosition[ship][0] >= -30 && cannonBallPosition.x - ennemyPosition[ship][0] <= 30) {
+                                            battleFeedback.Xsuccess = true
+                                            battleFeedback.shipId = ship
 
-                                    if (cannonBallPosition.x - ennemyPosition.x1 >= -30 && cannonBallPosition.x - ennemyPosition.x1 <= 30) {
-                                        battleFeedback.Xsuccess = true
-                                    }
-                                }else    if (cannonBallPosition.y - ennemyPosition.y2 <= 70 && cannonBallPosition.y - ennemyPosition.y2 >= 50) {
-                                    battleFeedback.Ysuccess = true
-                                    if (cannonBallPosition.x - ennemyPosition.x2 >= -30 && cannonBallPosition.x - ennemyPosition.x2 <= 25) {
-                                        battleFeedback.Xsuccess = true
+                                        }
                                     }
                                 }
+                               
 
                             }
 

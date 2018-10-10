@@ -29,16 +29,14 @@ export default class CopyShip extends Component {
                 ennemyPosition.x2 = state.x
                 ennemyPosition.y2 = state.y
             
-            
-            console.log(ennemyPosition)
-            
+                        
            if (getPlayerPosition.x - state.x < 250  &&  getPlayerPosition.x - state.x > -250 &&  getPlayerPosition.y - state.y > -250 &&  getPlayerPosition.y - state.y < 250 ){
                state.playerDetected = true
                //player is spotted
            }
          
            //ship is touchey    
-            if(battleFeedback.XYsuccess==true && state.hp > 0){ 
+            if(battleFeedback.XYsuccess==true && state.hp > 0 && battleFeedback.shipId==2){ 
                 state.hp = state.hp - 10
                 state.isTouchey = true
                 battleFeedback.XYsuccess = false
