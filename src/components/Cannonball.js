@@ -13,7 +13,8 @@ class Cannonball extends Component {
       y: props.y,
       isShooting: false,
       visible: props.visible,
-      weapon : props.weapon
+      weapon : props.weapon,
+      id : props.id
     };
 
     this.update = this.update.bind(this);

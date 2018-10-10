@@ -4,6 +4,7 @@ import BlackFlag from '../../components/BlackFlag'
 import {getPlayerPosition,ennemyPosition} from '../player_position'
 import {battleFeedback} from '../batte-feedback'
 import {ennemyShipInfo} from '../ennemy_ships'
+import Cannonball from '../../components/Cannonball'
 
 
 export default class BasicShip extends Component {
@@ -21,7 +22,7 @@ export default class BasicShip extends Component {
   render() {
     
     return (
-        <Ship x={this.props.x} y={this.props.y} hp={100} id={this.state.id}
+        <Ship x={this.props.x} y={this.props.y} hp={this.props.hp} id={this.state.id}
         onUpdate={function (state) {
              state.playerPosition.x= getPlayerPosition.x 
              state.playerPosition.y= getPlayerPosition.y 
@@ -86,6 +87,29 @@ export default class BasicShip extends Component {
         }}>
 
             <BlackFlag />
+            
+
+             <Cannonball x={40} y={40} visible={false} id={this.state.id} onUpdate={function (state) {
+                  if (state.isShooting) {
+                    if (state.y <= -110) {
+                        return { isShooting: false, visible: false, y:40 };
+                    } else {
+
+                        return { y: state.y - 2 };
+                    }
+                }
+                 if(ennemyPosition[state.id]){
+                    if(ennemyPosition[state.id][0]-getPlayerPosition.x<30 && ennemyPosition[state.id][0]-getPlayerPosition.x>-30){
+                        if(ennemyPosition[state.id][1]-getPlayerPosition.y<150 && ennemyPosition[state.id][1]-getPlayerPosition.y>0)
+                        //ennemy spotted the hero on the top side
+                        return {isShooting:true, visible:true, weapon:'left'}
+                        else if (ennemyPosition[state.id][1]-getPlayerPosition.y>-150 && ennemyPosition[state.id][1]-getPlayerPosition.y<0){return {isShooting:true, visible:true, weapon:'right'}}
+                    } 
+                 }
+               
+            }}>
+               
+            </Cannonball>
         </Ship>
 
     )
