@@ -31,7 +31,7 @@ export default class MainShip extends Component {
                         } else {
                             cannonBallPosition.x = getPlayerPosition.x
    
-                            console.log('tepu: ', cannonBallPosition.y - ennemyPosition.y)
+                            console.log('tepu: ', cannonBallPosition.y - ennemyPosition.y1)
 
                             if (state.weapon === 'left') {
                                 cannonBallPosition.y = getPlayerPosition.y + state.y
@@ -39,9 +39,14 @@ export default class MainShip extends Component {
                                 battleFeedback.Xsuccess = false
                                 battleFeedback.Ysuccess = false
 
-                                if (cannonBallPosition.y - ennemyPosition.y <= 70 && cannonBallPosition.y - ennemyPosition.y >= 50) {
+                                if (cannonBallPosition.y - ennemyPosition.y1 <= 70 && cannonBallPosition.y - ennemyPosition.y1 >= 50) {
                                     battleFeedback.Ysuccess = true
-                                    if (cannonBallPosition.x - ennemyPosition.x >= -30 && cannonBallPosition.x - ennemyPosition.x <= 25) {
+                                    if (cannonBallPosition.x - ennemyPosition.x1 >= -30 && cannonBallPosition.x - ennemyPosition.x1 <= 25) {
+                                        battleFeedback.Xsuccess = true
+                                    }
+                                }else   if (cannonBallPosition.y - ennemyPosition.y2 <= 70 && cannonBallPosition.y - ennemyPosition.y2 >= 50) {
+                                    battleFeedback.Ysuccess = true
+                                    if (cannonBallPosition.x - ennemyPosition.x2 >= -30 && cannonBallPosition.x - ennemyPosition.x2 <= 25) {
                                         battleFeedback.Xsuccess = true
                                     }
                                 }
@@ -51,10 +56,15 @@ export default class MainShip extends Component {
 
                                 battleFeedback.Xsuccess = false
                                 battleFeedback.Ysuccess = false
-                                if (cannonBallPosition.y - ennemyPosition.y >= -95 && cannonBallPosition.y - ennemyPosition.y <= -75) {
+                                if (cannonBallPosition.y - ennemyPosition.y1 >= -95 && cannonBallPosition.y - ennemyPosition.y1 <= -75) {
                                     battleFeedback.Ysuccess = true
 
-                                    if (cannonBallPosition.x - ennemyPosition.x >= -30 && cannonBallPosition.x - ennemyPosition.x <= 30) {
+                                    if (cannonBallPosition.x - ennemyPosition.x1 >= -30 && cannonBallPosition.x - ennemyPosition.x1 <= 30) {
+                                        battleFeedback.Xsuccess = true
+                                    }
+                                }else    if (cannonBallPosition.y - ennemyPosition.y2 <= 70 && cannonBallPosition.y - ennemyPosition.y2 >= 50) {
+                                    battleFeedback.Ysuccess = true
+                                    if (cannonBallPosition.x - ennemyPosition.x2 >= -30 && cannonBallPosition.x - ennemyPosition.x2 <= 25) {
                                         battleFeedback.Xsuccess = true
                                     }
                                 }

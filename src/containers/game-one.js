@@ -3,6 +3,7 @@ import Game from '../components/Game';
 import Background from '../components/Background'
 import MainShip from './player_ships/main_ship';
 import BasicShip from '../containers/ennemies/basic_ship'
+import CopyShip from './ennemies/copy_ship';
 
 export default class FinalGame extends Component {
 
@@ -11,7 +12,7 @@ export default class FinalGame extends Component {
       super(props)
     
       this.state = {
-      }
+      } 
     }
 
 
@@ -23,6 +24,7 @@ export default class FinalGame extends Component {
                 <Background />  
                 <MainShip/>
                 <BasicShip id={1} x={400} y={200}/>
+                <CopyShip id={1} x={650} y={660}/>
             </Game>
 
 

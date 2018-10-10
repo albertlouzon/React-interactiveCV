@@ -26,8 +26,8 @@ export default class BasicShip extends Component {
              state.playerPosition.y= getPlayerPosition.y 
           
                 ennemyShipInfo.hp = state.hp
-                ennemyPosition.x = state.x
-                ennemyPosition.y = state.y
+                ennemyPosition.x1 = state.x
+                ennemyPosition.y1 = state.y
             
             
             console.log(ennemyPosition)
