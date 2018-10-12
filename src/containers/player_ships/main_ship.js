@@ -13,6 +13,18 @@ let isPlayerShooting = false
 let xOrY 
 let tamerlapute =""
 
+//préparation pour quand yaura plusieurs bateaux avec different heught et width.
+let targetSize = {
+    y : { 
+        min : 0,
+        max : 0
+    },
+    x : { 
+        min : 0,
+        max : 0
+    }
+}
+
 export default class MainShip extends Component {
 
 
@@ -35,6 +47,7 @@ export default class MainShip extends Component {
                             battleFeedback.XYsuccess = true
                             battleFeedback.Xsuccess = false
                             battleFeedback.Ysuccess = false
+                            isPlayerShooting = false
                             return { isShooting: false, visible: false };
                         } else {
                             battleFeedback.Xsuccess = false
@@ -42,18 +55,28 @@ export default class MainShip extends Component {
                         }
                         if (xOrY < -100) {
                             isPlayerShooting = false
-                            return { isShooting: false, visible: false, x:40,y:40 };
+                            return { isShooting: false, visible: false, x:40 };
                         } else {
                             cannonBallPosition.x = getPlayerPosition.x
                             if (state.weapon === 'left') {
                                 cannonBallPosition.y = getPlayerPosition.y + state.y
                                 battleFeedback.Xsuccess = false
                                 battleFeedback.Ysuccess = false
+                                let shootEquation1
+                                let shootEquation2
 
                                 for(var ship in ennemyPosition){
-                                    if (cannonBallPosition.y - ennemyPosition[ship][1] <= 70 && cannonBallPosition.y - ennemyPosition[ship][1]  >= 50) {
+                                    if(tamerlapute==='X'){
+                                        shootEquation1 = cannonBallPosition.x - ennemyPosition[ship][0]
+                                        shootEquation2 = cannonBallPosition.y - ennemyPosition[ship][1]
+                                    }else {
+                                        shootEquation1 = cannonBallPosition.y - ennemyPosition[ship][1]
+                                        shootEquation2 = cannonBallPosition.x - ennemyPosition[ship][0]
+                                    }
+
+                                    if (shootEquation1 <= 70 && shootEquation1 >= 50) {
                                         battleFeedback.Ysuccess = true
-                                        if (cannonBallPosition.x - ennemyPosition[ship][0]  >= -30 && cannonBallPosition.x - ennemyPosition[ship][0]  <= 25) {
+                                        if (shootEquation2 >= -50 && shootEquation2  <= 60) {
                                             battleFeedback.Xsuccess = true
                                             battleFeedback.shipId = ship
                                         }
@@ -62,13 +85,25 @@ export default class MainShip extends Component {
 
                                 }
                             }  if (state.weapon === 'right') {
+                                cannonBallPosition.x = getPlayerPosition.x - state.x
                                 cannonBallPosition.y = getPlayerPosition.y - state.y
                                 battleFeedback.Xsuccess = false
                                 battleFeedback.Ysuccess = false
+                                let shootEquation1
+                                let shootEquation2
+                                //cette loop n'est peut etre pas necessaire
                                 for(var ship in ennemyPosition){
-                                    if (cannonBallPosition.y - ennemyPosition[ship][1] >= -95 && cannonBallPosition.y - ennemyPosition[ship][1] <= -75) {
+                                    if(tamerlapute==='X'){
+                                        shootEquation1 = cannonBallPosition.x - ennemyPosition[ship][0]
+                                        shootEquation2 = cannonBallPosition.y - ennemyPosition[ship][1]
+                                    }else {
+                                        shootEquation1 = cannonBallPosition.y - ennemyPosition[ship][1]
+                                        shootEquation2 = cannonBallPosition.x - ennemyPosition[ship][0]
+                                    }
+
+                                    if (shootEquation1 >= -95 && shootEquation1 <= -75) {
                                         battleFeedback.Ysuccess = true
-                                        if (cannonBallPosition.x - ennemyPosition[ship][0] >= -30 && cannonBallPosition.x - ennemyPosition[ship][0] <= 30) {
+                                        if (shootEquation2 >= -90 && shootEquation2 <= -5) {
                                             battleFeedback.Xsuccess = true
                                             battleFeedback.shipId = ship
                                         }
