@@ -11,6 +11,7 @@ import Input from "../Input";
 import {battleFeedback} from '../containers/batte-feedback'
 import { ennemyShipInfo } from "../containers/ennemy_ships";
 import { getPlayerPosition } from "../containers/player_position";
+import HealthBar from './healthBar'
 
 const WIDTH = 120;
 const HEIGHT = 120;
@@ -18,7 +19,6 @@ const HEIGHT = 120;
 class Ship extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       id : this.props.id,
       x: props.x,
@@ -28,8 +28,10 @@ class Ship extends Component {
       moveRight: true,
       moveUp : false,
       hasPhysics: false,
+      hpMax:props.hp,
       hp:props.hp,
       isTouchey : false,
+      updateHealthBar:false,
       playerDetected : false,
       playerPosition : {},
       webKitFilter: '',
@@ -94,12 +96,18 @@ class Ship extends Component {
         this.setState({
           webKitFilter : filter,
           filter: filter,
+          updateHealthBar:true
         })
         setTimeout(() => {
           this.setState({
             isTouchey:false
           })
         }, 40);
+        setTimeout(() => {
+          this.setState({
+            updateHealthBar:false
+          })
+        }, 100);
       }else { 
         this.setState({
           webKitFilter : '',
@@ -189,7 +197,7 @@ class Ship extends Component {
             ref={(b) => this.body = b }
           >
             <div>
-              {this.state.hp}
+            <HealthBar hp={this.state.hp} shouldUpdate={this.state.updateHealthBar} isTouchey={this.state.isTouchey} hpMax={this.state.hpMax}/>
               {children}
             </div>
           </Body>
@@ -222,3 +230,5 @@ Ship.defaultProps = {
 };
 
 export default Ship;
+
+
