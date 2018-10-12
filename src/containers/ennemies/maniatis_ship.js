@@ -8,7 +8,7 @@ import Cannonball from '../../components/Cannonball'
 import Maniatis from '../../components/Maniatis'
 
 
-let cannonBallSpeed = 6
+let cannonBallSpeed = 6 
 let YrangeForShoot = 500
 let XrangeForShoot = 120
 
