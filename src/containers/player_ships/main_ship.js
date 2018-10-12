@@ -25,7 +25,6 @@ export default class MainShip extends Component {
                     if (state.isShooting) {
                         if (battleFeedback.Xsuccess == true && battleFeedback.Ysuccess == true) {
                             battleFeedback.XYsuccess = true
-                            console.log('final touché')
                             battleFeedback.Xsuccess = false
                             battleFeedback.Ysuccess = false
                             return { isShooting: false, visible: false };
@@ -94,9 +93,6 @@ export default class MainShip extends Component {
                     const newState = {};
                     const speed = 5
                     if (keyCodes.indexOf(Key.p) >= 0) {
-                        console.log('player is at :', getPlayerPosition)
-                        console.log('cannonball is at :', cannonBallPosition)
-                        console.log('annemy is at :', ennemyPosition)
                     }
 
 

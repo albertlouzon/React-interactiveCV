@@ -38,7 +38,6 @@ export default class BasicShip extends Component {
                        ennemyPosition[state.id] = [undefined,undefined]   
                       
                    }
-                   // console.log('ennemy position test : ', ennemyPosition)
               if (getPlayerPosition.x - state.x < 250  &&  getPlayerPosition.x - state.x > -250 &&  getPlayerPosition.y - state.y > -250 &&  getPlayerPosition.y - state.y < 250 ){
                   state.playerDetected = true
                   //player is spotted
@@ -113,14 +112,12 @@ export default class BasicShip extends Component {
                                 battleEnnemyFeedback.Ysuccess = true
                                 if(ennemyCanonLocation.x - getPlayerPosition.x > -41 && ennemyCanonLocation.x- getPlayerPosition.x <41){
                                     battleEnnemyFeedback.XYsuccess=true
-                                    console.log('bravo')
                             
                                 }else{
                                     battleEnnemyFeedback.Ysuccess = false
 
                                 }
                             }
-                            console.log('calcul right' , ennemyCanonLocation.y - getPlayerPosition.y )
                         }
                         if(state.weapon==='left'){
                             ennemyCanonLocation.y = ennemyPosition[state.id][1] + state.y
