@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import Ship from '../../components/Ship'
 import BlackFlag from '../../components/BlackFlag'
 import {getPlayerPosition,ennemyPosition} from '../player_position'
-import {battleFeedback} from '../batte-feedback'
-import {ennemyShipInfo} from '../ennemy_ships'
+import {battleFeedback, battleEnnemyFeedback} from '../batte-feedback'
+import {ennemyShipInfo,ennemyCanonLocation} from '../ennemy_ships'
 import Cannonball from '../../components/Cannonball'
 
 
@@ -98,13 +98,44 @@ export default class BasicShip extends Component {
             <BlackFlag />
             
 
-             <Cannonball x={40} y={40} visible={false} id={this.state.id} onUpdate={function (state) {
+             <Cannonball id={this.state.id} x={40} y={40} visible={false} id={this.state.id} onUpdate={function (state) {
                   if (state.isShooting) {
+                    
                     if (state.y <= -110) {
+                       
                         return { isShooting: false, visible: false, y:40 };
                     } else {
 
-                        return { y: state.y - 2 };
+                        if(state.weapon==='right'){
+                            ennemyCanonLocation.y = ennemyPosition[state.id][1] - state.y
+                            ennemyCanonLocation.x = ennemyPosition[state.id][0]
+                            if(ennemyCanonLocation.y - getPlayerPosition.y > -45 && ennemyCanonLocation.y - getPlayerPosition.y <45){
+                                battleEnnemyFeedback.Ysuccess = true
+                                if(ennemyCanonLocation.x - getPlayerPosition.x > -41 && ennemyCanonLocation.x- getPlayerPosition.x <41){
+                                    battleEnnemyFeedback.XYsuccess=true
+                                    console.log('bravo')
+                            
+                                }else{
+                                    battleEnnemyFeedback.Ysuccess = false
+
+                                }
+                            }
+                            console.log('calcul right' , ennemyCanonLocation.y - getPlayerPosition.y )
+                        }
+                        if(state.weapon==='left'){
+                            ennemyCanonLocation.y = ennemyPosition[state.id][1] + state.y
+                            ennemyCanonLocation.x = ennemyPosition[state.id][0]
+                            if(ennemyCanonLocation.y - getPlayerPosition.y > -5 && ennemyCanonLocation.y - getPlayerPosition.y <90){
+                                battleEnnemyFeedback.Ysuccess = true
+                                if(ennemyCanonLocation.x - getPlayerPosition.x > -41 && ennemyCanonLocation.x- getPlayerPosition.x <41){
+                                    battleEnnemyFeedback.XYsuccess=true
+                            
+                                }else {
+                                    battleEnnemyFeedback.Ysuccess = false
+                                }
+                            }
+                        }
+                        return { y: state.y - 2 }
                     }
                 }
                  if(ennemyPosition[state.id]){

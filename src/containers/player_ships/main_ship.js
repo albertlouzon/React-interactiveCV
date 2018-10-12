@@ -4,7 +4,7 @@ import KeyEvent from '../../components/KeyEvent'
 import Cannonball from '../../components/Cannonball'
 import Key from '../../Key'
 import { getPlayerPosition, cannonBallPosition, ennemyPosition } from '../player_position'
-import { battleFeedback } from '../batte-feedback'
+import { battleFeedback,battleEnnemyFeedback } from '../batte-feedback'
 
 
 
@@ -13,7 +13,13 @@ export default class MainShip extends Component {
 
     render() {
         return (
-            <Ship x={10} y={10} hp={150}>
+            <Ship x={10} y={10} hp={500} onUpdate={function(state){
+                if(battleEnnemyFeedback.XYsuccess==true && state.hp > 0){ 
+                    state.hp = state.hp - 1
+                    state.isTouchey = true
+                    battleEnnemyFeedback.XYsuccess = false
+                }
+            }}>
                 <Cannonball x={40} y={40} visible={false} onUpdate={function (state) {
                 
                     if (state.isShooting) {
@@ -86,6 +92,7 @@ export default class MainShip extends Component {
                 </Cannonball>
                 <KeyEvent onDown={function (keyCodes, state) {
                     const newState = {};
+                    const speed = 5
                     if (keyCodes.indexOf(Key.p) >= 0) {
                         console.log('player is at :', getPlayerPosition)
                         console.log('cannonball is at :', cannonBallPosition)
@@ -94,22 +101,22 @@ export default class MainShip extends Component {
 
 
                     if (keyCodes.indexOf(Key.z) >= 0) {
-                        newState.y = state.y - 4;
+                        newState.y = state.y - speed;
                         newState.directionIndex = 4;
                     }
 
                     if (keyCodes.indexOf(Key.s) >= 0) {
-                        newState.y = state.y + 4;
+                        newState.y = state.y + speed;
                         newState.directionIndex = 0;
                     }
 
                     if (keyCodes.indexOf(Key.q) >= 0) {
-                        newState.x = state.x - 4;
+                        newState.x = state.x - speed;
                         newState.directionIndex = 6;
                     }
 
                     if (keyCodes.indexOf(Key.d) >= 0) {
-                        newState.x = state.x + 4;
+                        newState.x = state.x + speed;
                         newState.directionIndex = 2;
                     }
 
