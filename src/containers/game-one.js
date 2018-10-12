@@ -22,8 +22,11 @@ export default class FinalGame extends Component {
             <Game>
                 <Background />  
                 <MainShip/>
-                <BasicShip id={0} x={400} y={200} hp={500}/>
-                <BasicShip id={1} x={600} y={400} hp={40}/>
+                <BasicShip id={0} x={400} y={200} hp={50}/>
+                <BasicShip id={1} x={200} y={350} hp={30}/>
+                <BasicShip id={2} x={800} y={400} hp={80}/>
+                <BasicShip id={3} x={700} y={200} hp={60}/>
+                <ManiatisShip id={4} x={400} y={500} hp={30}/>
             </Game>
 
 

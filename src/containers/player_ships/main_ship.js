@@ -15,15 +15,17 @@ let tamerlapute =""
 
 //préparation pour quand yaura plusieurs bateaux avec different heught et width.
 let targetSize = {
-    y : { 
+    equation1 : { 
         min : 0,
         max : 0
     },
-    x : { 
+    equation2 : { 
         min : 0,
         max : 0
     }
 }
+
+let heroCanonRange = -90
 
 export default class MainShip extends Component {
 
@@ -38,28 +40,31 @@ export default class MainShip extends Component {
                 }
             }}>
                 <Cannonball canon='first' x={40} y={40} visible={false} onUpdate={function (state) {
+
                     if (state.isShooting) {
                         if (tamerlapute==="X"){
+
                             xOrY = state.x
-                        }else {xOrY=state.y}
+                        }else {xOrY=state.y
+                        }
                         isPlayerShooting = true
                         if (battleFeedback.Xsuccess == true && battleFeedback.Ysuccess == true) {
                             battleFeedback.XYsuccess = true
                             battleFeedback.Xsuccess = false
                             battleFeedback.Ysuccess = false
                             isPlayerShooting = false
-                            return { isShooting: false, visible: false };
+                            return { isShooting: false, visible: false, x:40 };
                         } else {
                             battleFeedback.Xsuccess = false
                             battleFeedback.Ysuccess = false
                         }
-                        if (xOrY < -100) {
+                        if (xOrY < heroCanonRange) {
                             isPlayerShooting = false
                             return { isShooting: false, visible: false, x:40 };
                         } else {
-                            cannonBallPosition.x = getPlayerPosition.x
+                           
                             if (state.weapon === 'left') {
-                                cannonBallPosition.y = getPlayerPosition.y + state.y
+                               
                                 battleFeedback.Xsuccess = false
                                 battleFeedback.Ysuccess = false
                                 let shootEquation1
@@ -67,16 +72,31 @@ export default class MainShip extends Component {
 
                                 for(var ship in ennemyPosition){
                                     if(tamerlapute==='X'){
-                                        shootEquation1 = cannonBallPosition.x - ennemyPosition[ship][0]
-                                        shootEquation2 = cannonBallPosition.y - ennemyPosition[ship][1]
-                                    }else {
+                                        cannonBallPosition.x = getPlayerPosition.x + state.x
+                                        cannonBallPosition.y = getPlayerPosition.y
                                         shootEquation1 = cannonBallPosition.y - ennemyPosition[ship][1]
                                         shootEquation2 = cannonBallPosition.x - ennemyPosition[ship][0]
+                                        targetSize.equation1.min = -20
+                                        targetSize.equation1.max = 30
+                                        targetSize.equation2.min = 15
+                                        targetSize.equation2.max = 86
+
+                                        
+                                    }else {
+                                        cannonBallPosition.x = getPlayerPosition.x
+                                        cannonBallPosition.y = getPlayerPosition.y + state.y
+                                        shootEquation1 = cannonBallPosition.y - ennemyPosition[ship][1]
+                                        shootEquation2 = cannonBallPosition.x - ennemyPosition[ship][0]
+                                        targetSize.equation1.min = 50
+                                        targetSize.equation1.max = 70
+                                        targetSize.equation2.min = -30
+                                        targetSize.equation2.max = 30
+                                       
                                     }
 
-                                    if (shootEquation1 <= 70 && shootEquation1 >= 50) {
+                                    if (shootEquation1 >= targetSize.equation1.min  && shootEquation1 <= targetSize.equation1.max ) {
                                         battleFeedback.Ysuccess = true
-                                        if (shootEquation2 >= -50 && shootEquation2  <= 60) {
+                                        if (shootEquation2 >= targetSize.equation2.min && shootEquation2  <=  targetSize.equation2.max) {
                                             battleFeedback.Xsuccess = true
                                             battleFeedback.shipId = ship
                                         }
@@ -84,9 +104,21 @@ export default class MainShip extends Component {
 
 
                                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             }  if (state.weapon === 'right') {
-                                cannonBallPosition.x = getPlayerPosition.x - state.x
-                                cannonBallPosition.y = getPlayerPosition.y - state.y
                                 battleFeedback.Xsuccess = false
                                 battleFeedback.Ysuccess = false
                                 let shootEquation1
@@ -94,16 +126,27 @@ export default class MainShip extends Component {
                                 //cette loop n'est peut etre pas necessaire
                                 for(var ship in ennemyPosition){
                                     if(tamerlapute==='X'){
-                                        shootEquation1 = cannonBallPosition.x - ennemyPosition[ship][0]
-                                        shootEquation2 = cannonBallPosition.y - ennemyPosition[ship][1]
-                                    }else {
+                                        cannonBallPosition.x = getPlayerPosition.x - state.x
+                                        cannonBallPosition.y = getPlayerPosition.y
                                         shootEquation1 = cannonBallPosition.y - ennemyPosition[ship][1]
                                         shootEquation2 = cannonBallPosition.x - ennemyPosition[ship][0]
+                                        targetSize.equation1.min = -20
+                                        targetSize.equation1.max = 30
+                                        targetSize.equation2.min =  -82
+                                        targetSize.equation2.max = -30
+                                    }else {
+                                        cannonBallPosition.x = getPlayerPosition.x
+                                        cannonBallPosition.y = getPlayerPosition.y - state.y
+                                        shootEquation1 = cannonBallPosition.x - ennemyPosition[ship][0]
+                                        shootEquation2 = cannonBallPosition.y - ennemyPosition[ship][1]
+                                        targetSize.equation1.min = -45
+                                        targetSize.equation1.max = 30
+                                        targetSize.equation2.min =  -70
+                                        targetSize.equation2.max = -35
                                     }
-
-                                    if (shootEquation1 >= -95 && shootEquation1 <= -75) {
+                                    if (shootEquation1 >= targetSize.equation1.min  && shootEquation1 <= targetSize.equation1.max) {
                                         battleFeedback.Ysuccess = true
-                                        if (shootEquation2 >= -90 && shootEquation2 <= -5) {
+                                        if (shootEquation2 >= targetSize.equation2.min && shootEquation2 <= targetSize.equation2.max) {
                                             battleFeedback.Xsuccess = true
                                             battleFeedback.shipId = ship
                                         }
@@ -112,6 +155,7 @@ export default class MainShip extends Component {
                                
 
                             }
+
                             if(newState.directionIndex===0 || newState.directionIndex===4){
                                 tamerlapute = "X"
                                 direction = state.x - cannonSpeed
@@ -127,21 +171,18 @@ export default class MainShip extends Component {
                     }
                 }}>
                     <KeyEvent onDown={function (keyCodes, state) {
+                        //invoke shooting on pressing these keys
                         if (keyCodes.indexOf(Key.a) >= 0) {
-                            if(newState.directionIndex===0 || newState.directionIndex===4){
-                                direction = state.x - cannonSpeed
-
-
-                            }else if (newState.directionIndex===2 || newState.directionIndex===6){
-                                direction = state.y - cannonSpeed
-
+                            if(isPlayerShooting===false){
+                                return { isShooting: true, visible: true, y: 40, weapon: 'left' }
                             }
-
-                            return { isShooting: true, visible: true, y: 40, weapon: 'left' };
+                            ;
                         }
                         if (keyCodes.indexOf(Key.e) >= 0) {
-                            direction = state.y + cannonSpeed
-                            return { isShooting: true, visible: true, y: 40, weapon: 'right' };
+                            if(isPlayerShooting===false){
+                                return { isShooting: true, visible: true, y: 40, weapon: 'right' };
+
+                            }
                         }
                     }} />
                 </Cannonball>
@@ -168,21 +209,21 @@ export default class MainShip extends Component {
                         if(isPlayerShooting===false){newState.directionIndex = 2}
                     }
 
-                    if (keyCodes.indexOf(Key.z) >= 0 && keyCodes.indexOf(Key.q) >= 0) {
-                        if(isPlayerShooting===false){newState.directionIndex = 5}
-                    }
+                    // if (keyCodes.indexOf(Key.z) >= 0 && keyCodes.indexOf(Key.q) >= 0) {
+                    //     if(isPlayerShooting===false){newState.directionIndex = 5}
+                    // }
 
-                    if (keyCodes.indexOf(Key.z) >= 0 && keyCodes.indexOf(Key.d) >= 0) {
-                        if(isPlayerShooting===false){newState.directionIndex = 3}
-                    }
+                    // if (keyCodes.indexOf(Key.z) >= 0 && keyCodes.indexOf(Key.d) >= 0) {
+                    //     if(isPlayerShooting===false){newState.directionIndex = 3}
+                    // }
 
-                    if (keyCodes.indexOf(Key.s) >= 0 && keyCodes.indexOf(Key.a) >= 0) {
-                        if(isPlayerShooting===false){newState.directionIndex = 7}
-                    }
+                    // if (keyCodes.indexOf(Key.s) >= 0 && keyCodes.indexOf(Key.a) >= 0) {
+                    //     if(isPlayerShooting===false){newState.directionIndex = 7}
+                    // }
 
-                    if (keyCodes.indexOf(Key.s) >= 0 && keyCodes.indexOf(Key.d) >= 0) {
-                        if(isPlayerShooting===false){newState.directionIndex = 1}
-                    }
+                    // if (keyCodes.indexOf(Key.s) >= 0 && keyCodes.indexOf(Key.d) >= 0) {
+                    //     if(isPlayerShooting===false){newState.directionIndex = 1}
+                    // }
                     
 
 
