@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Body } from "react-game-kit";
 import Matter from "matter-js";
 import BlackFlag from "./BlackFlag";
+import Maniatis from './Maniatis'
 import PhysicsBody from "./PhysicsBody";
 import Hit from "./Hit";
 import KeyEvent from "./KeyEvent";
@@ -144,6 +145,7 @@ class Ship extends Component {
       backgroundImage: this.state.background,
       backgroundSize: "cover",
       backgroundPosition: `0px ${this.state.directionIndex * (-HEIGHT)}px`,
+      backgroundRepeat:'repeat',
       width: WIDTH,
       height: HEIGHT,
       filter:this.state.filter,
@@ -155,6 +157,13 @@ class Ship extends Component {
     React.Children.forEach(children, (child) => {
       if (child.type === BlackFlag) {
         styles.backgroundImage ="url('../../assets/ship_pirate.png')";
+      }
+
+      if (child.type === Maniatis) {
+        styles.backgroundImage ="url('../../assets/Ships/viking/boat.png')";
+        styles.backgroundSize = 'contain'
+        styles.backgroundPosition='center'
+        styles.height = HEIGHT/1.2
       }
 
       if (child.type === Hit) {

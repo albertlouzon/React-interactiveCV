@@ -5,9 +5,14 @@ import {getPlayerPosition,ennemyPosition} from '../player_position'
 import {battleFeedback, battleEnnemyFeedback} from '../batte-feedback'
 import {ennemyShipInfo,ennemyCanonLocation} from '../ennemy_ships'
 import Cannonball from '../../components/Cannonball'
+import Maniatis from '../../components/Maniatis'
 
 
-export default class BasicShip extends Component {
+let cannonBallSpeed = 6
+let YrangeForShoot = 500
+let XrangeForShoot = 120
+
+export default class ManiatisShip extends Component {
     constructor(props) {
       super(props)
         this.x = this.props.x
@@ -94,20 +99,19 @@ export default class BasicShip extends Component {
         
         }}>
 
-            <BlackFlag />
+            <Maniatis />
             
 
-             <Cannonball canon='first' id={this.state.id} x={40} y={40} visible={false} id={this.state.id} onUpdate={function (state) {
+             <Cannonball canon='second' id={this.state.id} x={40} y={40} visible={false} id={this.state.id} onUpdate={function (state) {
                   if (state.isShooting) {
                     
-                    if (state.y <= -110) {
+                    if (state.y <= -500) {
                        
                         return { isShooting: false, visible: false, y:40 };
                     } else {
-
+                        ennemyCanonLocation.x = ennemyPosition[state.id][0] +30
                         if(state.weapon==='right'){
                             ennemyCanonLocation.y = ennemyPosition[state.id][1] - state.y
-                            ennemyCanonLocation.x = ennemyPosition[state.id][0]
                             if(ennemyCanonLocation.y - getPlayerPosition.y > -45 && ennemyCanonLocation.y - getPlayerPosition.y <45){
                                 battleEnnemyFeedback.Ysuccess = true
                                 if(ennemyCanonLocation.x - getPlayerPosition.x > -41 && ennemyCanonLocation.x- getPlayerPosition.x <41){
@@ -121,7 +125,6 @@ export default class BasicShip extends Component {
                         }
                         if(state.weapon==='left'){
                             ennemyCanonLocation.y = ennemyPosition[state.id][1] + state.y
-                            ennemyCanonLocation.x = ennemyPosition[state.id][0]
                             if(ennemyCanonLocation.y - getPlayerPosition.y > -5 && ennemyCanonLocation.y - getPlayerPosition.y <90){
                                 battleEnnemyFeedback.Ysuccess = true
                                 if(ennemyCanonLocation.x - getPlayerPosition.x > -41 && ennemyCanonLocation.x- getPlayerPosition.x <41){
@@ -132,16 +135,16 @@ export default class BasicShip extends Component {
                                 }
                             }
                         }
-                        return { y: state.y - 2 }
+                        return { y: state.y - cannonBallSpeed }
                     }
                 }
                  if(ennemyPosition[state.id]){
-                    if(ennemyPosition[state.id][0]-getPlayerPosition.x<30 && ennemyPosition[state.id][0]-getPlayerPosition.x>-30){
-                        if(ennemyPosition[state.id][1]-getPlayerPosition.y<150 && ennemyPosition[state.id][1]-getPlayerPosition.y>0)
+                    if(ennemyPosition[state.id][0]-getPlayerPosition.x<XrangeForShoot && ennemyPosition[state.id][0]-getPlayerPosition.x>-XrangeForShoot){
+                        if(ennemyPosition[state.id][1]-getPlayerPosition.y<YrangeForShoot && ennemyPosition[state.id][1]-getPlayerPosition.y>0)
                         //ennemy spotted the hero on the top side
                         return {isShooting:true, visible:true, weapon:'left'}
                         //spotted on the right side
-                        else if (ennemyPosition[state.id][1]-getPlayerPosition.y>-150 && ennemyPosition[state.id][1]-getPlayerPosition.y<0){return {isShooting:true, visible:true, weapon:'right'}}
+                        else if (ennemyPosition[state.id][1]-getPlayerPosition.y>-YrangeForShoot && ennemyPosition[state.id][1]-getPlayerPosition.y<0){return {isShooting:true, visible:true, weapon:'right'}}
                     } 
                  }
                

@@ -20,7 +20,7 @@ export default class MainShip extends Component {
                     battleEnnemyFeedback.XYsuccess = false
                 }
             }}>
-                <Cannonball x={40} y={40} visible={false} onUpdate={function (state) {
+                <Cannonball canon='first' x={40} y={40} visible={false} onUpdate={function (state) {
                 
                     if (state.isShooting) {
                         if (battleFeedback.Xsuccess == true && battleFeedback.Ysuccess == true) {

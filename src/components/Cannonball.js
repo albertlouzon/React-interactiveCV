@@ -14,7 +14,11 @@ class Cannonball extends Component {
       isShooting: false,
       visible: props.visible,
       weapon : props.weapon,
-      id : props.id
+      id : props.id,
+      canon : props.canon,
+      canonTypeImg : "url('../../assets/cannonball2.png')",
+      width:30,
+      height:30
     };
 
     this.update = this.update.bind(this);
@@ -61,6 +65,13 @@ class Cannonball extends Component {
   }
 
   update() {
+      if(this.state.canon==='second'){
+      this.setState({
+        canonTypeImg : "url('https://i.4pcdn.org/pol/1527730025575.png')",
+        height:90,
+        width:90,
+      })
+    }
     const { onUpdate } = this.props;
     if (onUpdate && typeof onUpdate === "function") {
       const onUpdateResult = onUpdate(this.state);
@@ -74,7 +85,7 @@ class Cannonball extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    let {children}=this.props
     if(this.state.weapon == "left" ){
       return (
         <div style={{
@@ -82,10 +93,11 @@ class Cannonball extends Component {
           position: "absolute",
           left: this.state.x,
           top: this.state.y,
-          backgroundImage: "url('../../assets/cannonball2.png')",    
-          backgroundSize: "contain",
-          width: 30,
-          height: 30 }}
+          backgroundImage: this.state.canonTypeImg,    
+          backgroundSize: "cover",
+          backgroundRepeat:'no-repeat',
+          width: this.state.width,
+          height: this.state.height }}
         >{children}</div>
       );
 
@@ -97,10 +109,11 @@ class Cannonball extends Component {
           position: "absolute",
           left: this.state.x,
           bottom: this.state.y,
-          backgroundImage: "url('../../assets/cannonball2.png')",    
-          backgroundSize: "contain",
-          width: 30,
-          height: 30 }}
+          backgroundImage: this.state.canonTypeImg,    
+          backgroundSize: "cover",
+          backgroundRepeat:'no-repeat',
+          width: this.state.width,
+          height: this.state.height }}
         >{children}</div>
       );
 
