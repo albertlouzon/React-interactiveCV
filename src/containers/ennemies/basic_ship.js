@@ -24,65 +24,74 @@ export default class BasicShip extends Component {
     return (
         <Ship x={this.props.x} y={this.props.y} hp={this.props.hp} id={this.state.id}
         onUpdate={function (state) {
-             state.playerPosition.x= getPlayerPosition.x 
-             state.playerPosition.y= getPlayerPosition.y 
-          
-                ennemyShipInfo.hp = state.hp
-                
-                let shipLocation = [state.x, state.y]
-                ennemyPosition[state.id] = shipLocation
-                // console.log('ennemy position test : ', ennemyPosition)
-           if (getPlayerPosition.x - state.x < 250  &&  getPlayerPosition.x - state.x > -250 &&  getPlayerPosition.y - state.y > -250 &&  getPlayerPosition.y - state.y < 250 ){
-               state.playerDetected = true
-               //player is spotted
-           }
-         
-           //ship is touchey    
-            if(battleFeedback.XYsuccess==true && state.hp > 0 && battleFeedback.shipId==state.id){ 
-                state.hp = state.hp - 10
-                state.isTouchey = true
-                battleFeedback.XYsuccess = false
-            }
+            if(state.isDestroyed === true){
 
-            if (state.x >= 300 && state.moveRight) {
-                return {
-                    moveLeft: true,
-                    moveRight: false,
-                }
+            }else{
+                state.playerPosition.x= getPlayerPosition.x 
+                state.playerPosition.y= getPlayerPosition.y 
+             
+                   ennemyShipInfo.hp = state.hp
+                   
+                   let shipLocation = [state.x, state.y]
+                   ennemyPosition[state.id] = shipLocation
+                   if(state.hp=='destroyed'){
+                       ennemyPosition[state.id] = [undefined,undefined]   
+                      
+                   }
+                   // console.log('ennemy position test : ', ennemyPosition)
+              if (getPlayerPosition.x - state.x < 250  &&  getPlayerPosition.x - state.x > -250 &&  getPlayerPosition.y - state.y > -250 &&  getPlayerPosition.y - state.y < 250 ){
+                  state.playerDetected = true
+                  //player is spotted
+              }
+            
+              //ship is touchey    
+               if(battleFeedback.XYsuccess==true && state.hp > 0 && battleFeedback.shipId==state.id){ 
+                   state.hp = state.hp - 10
+                   state.isTouchey = true
+                   battleFeedback.XYsuccess = false
+               }
+   
+               if (state.x >= 300 && state.moveRight) {
+                   return {
+                       moveLeft: true,
+                       moveRight: false,
+                   }
+               }
+   
+               if (state.x <= 100 && state.moveLeft) {
+                   return {
+                       moveLeft: false,
+                       moveRight: true
+                   }
+               }
+               if (state.y <= 300 && state.moveUp) {
+                   return {
+                       moveLeft: false,
+                       moveRight: false,
+                       moveUp: true
+                   }
+               }
+   
+               if (state.moveUp) {
+                   return {
+                       y: state.y + 2
+                   }
+               }
+   
+               if (state.moveRight) {
+                   return {
+                       x: state.x + 1
+                   }
+               }
+   
+               if (state.moveLeft) {
+                   return {
+                       x: state.x - 1
+                   }
+               }
+   
             }
-
-            if (state.x <= 100 && state.moveLeft) {
-                return {
-                    moveLeft: false,
-                    moveRight: true
-                }
-            }
-            if (state.y <= 300 && state.moveUp) {
-                return {
-                    moveLeft: false,
-                    moveRight: false,
-                    moveUp: true
-                }
-            }
-
-            if (state.moveUp) {
-                return {
-                    y: state.y + 2
-                }
-            }
-
-            if (state.moveRight) {
-                return {
-                    x: state.x + 1
-                }
-            }
-
-            if (state.moveLeft) {
-                return {
-                    x: state.x - 1
-                }
-            }
-
+           
         
         }}>
 

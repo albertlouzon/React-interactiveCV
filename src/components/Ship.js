@@ -32,7 +32,11 @@ class Ship extends Component {
       playerDetected : false,
       playerPosition : {},
       webKitFilter: '',
-      filter : ''
+      filter : '',
+      isDestroyed : false,
+      background : "url('../../assets/ship_rotate.png')",
+      display:'inline',
+      opacity:1
     };
 
     this.update = this.update.bind(this);
@@ -80,59 +84,72 @@ class Ship extends Component {
   }
 
   update() {
-    const { onUpdate } = this.props;
-    if(this.state.isTouchey == true){
-      const filter = "brightness(2.5) hue-rotate(-60deg)";
-      this.setState({
-        webKitFilter : filter,
-        filter: filter,
-      })
-      setTimeout(() => {
+    if(this.state.isDestroyed===true){
+
+    }else {
+      const { onUpdate } = this.props;
+      if(this.state.isTouchey == true){
+        const filter = "brightness(2.5) hue-rotate(-60deg)";
         this.setState({
-          isTouchey:false
+          webKitFilter : filter,
+          filter: filter,
         })
-      }, 40);
-    }else { 
-      this.setState({
-        webKitFilter : '',
-        filter: ''
-      })
-    }
-
-    if (this.state.hp == 0){
-      this.setState({
-        hp:'destroyed'
-      })
-    }
-    if (onUpdate && typeof onUpdate === "function") {
-      const onUpdateResult = onUpdate(this.state);
-
-      if (onUpdateResult) {
-        this.setState((prevState) => {
-          return { ...prevState, ...onUpdateResult };
-        });
+        setTimeout(() => {
+          this.setState({
+            isTouchey:false
+          })
+        }, 40);
+      }else { 
+        this.setState({
+          webKitFilter : '',
+          filter: ''
+        })
+      }
+  
+      if (this.state.hp == 0){
+        this.setState({
+          hp:'destroyed',
+          background : '',
+          display:'none',
+          opacity:0,
+          x:0,
+          y:0
+        })
+      }
+      if (onUpdate && typeof onUpdate === "function") {
+        const onUpdateResult = onUpdate(this.state);
+  
+        if (onUpdateResult) {
+          this.setState((prevState) => {
+            return { ...prevState, ...onUpdateResult };
+          });
+        }
+      }
+  
+      if (this.body.body) {
+        Matter.Body.setVelocity(this.body.body, { x: this.state.x, y: this.state.y });
       }
     }
-
-    if (this.body.body) {
-      Matter.Body.setVelocity(this.body.body, { x: this.state.x, y: this.state.y });
     }
-  }
+   
 
   render() {
     const { children } = this.props;
 
     const styles = {
+      display:this.state.display,
       position: "absolute",
       left: this.state.x,
       top: this.state.y,
-      backgroundImage: "url('../../assets/ship_rotate.png')",
+      backgroundImage: this.state.background,
       backgroundSize: "cover",
       backgroundPosition: `0px ${this.state.directionIndex * (-HEIGHT)}px`,
       width: WIDTH,
       height: HEIGHT,
       filter:this.state.filter,
-      webKitFilter : this.state.webKitFilter
+      webKitFilter : this.state.webKitFilter,
+      opacity:this.state.opacity
+
     };
 
     React.Children.forEach(children, (child) => {
