@@ -8,9 +8,10 @@ import { battleFeedback,battleEnnemyFeedback } from '../batte-feedback'
 
 const newState = {}; //for direction index. bot=0 ; right = 2 ; top = 4 ; left = 6
 const cannonSpeed = 3
-let axis
 let direction
 let isPlayerShooting = false
+let xOrY 
+let tamerlapute =""
 
 export default class MainShip extends Component {
 
@@ -26,6 +27,9 @@ export default class MainShip extends Component {
             }}>
                 <Cannonball canon='first' x={40} y={40} visible={false} onUpdate={function (state) {
                     if (state.isShooting) {
+                        if (tamerlapute==="X"){
+                            xOrY = state.x
+                        }else {xOrY=state.y}
                         isPlayerShooting = true
                         if (battleFeedback.Xsuccess == true && battleFeedback.Ysuccess == true) {
                             battleFeedback.XYsuccess = true
@@ -36,12 +40,10 @@ export default class MainShip extends Component {
                             battleFeedback.Xsuccess = false
                             battleFeedback.Ysuccess = false
                         }
-                        console.log(axis)
-                        if (state.y < -100) {
+                        if (xOrY < -100) {
                             isPlayerShooting = false
                             return { isShooting: false, visible: false, x:40,y:40 };
                         } else {
-                            console.log(state.y)
                             cannonBallPosition.x = getPlayerPosition.x
                             if (state.weapon === 'left') {
                                 cannonBallPosition.y = getPlayerPosition.y + state.y
@@ -59,9 +61,6 @@ export default class MainShip extends Component {
 
 
                                 }
-                                
-                                
-
                             }  if (state.weapon === 'right') {
                                 cannonBallPosition.y = getPlayerPosition.y - state.y
                                 battleFeedback.Xsuccess = false
@@ -78,22 +77,31 @@ export default class MainShip extends Component {
                                
 
                             }
-                           return  {y : state.y - 3 }
+                            if(newState.directionIndex===0 || newState.directionIndex===4){
+                                tamerlapute = "X"
+                                direction = state.x - cannonSpeed
+                                return  {x:direction}
+
+                            }else if (newState.directionIndex===2 || newState.directionIndex===6){
+                                tamerlapute = "Y"
+                                direction = state.y - cannonSpeed
+                                return  {y:direction}
+                            }
+                          
                         }
                     }
                 }}>
                     <KeyEvent onDown={function (keyCodes, state) {
                         if (keyCodes.indexOf(Key.a) >= 0) {
-                            direction = state.y - cannonSpeed
-                            if(newState.directionIndex===0){
-                                axis = state.y
-                            }else if(newState.directionIndex===2){
-                                axis = state.x
-                            }else if(newState.directionIndex===4){
-                                axis = state.y
-                            }else if(newState.directionIndex===6){
-                                axis = state.x
+                            if(newState.directionIndex===0 || newState.directionIndex===4){
+                                direction = state.x - cannonSpeed
+
+
+                            }else if (newState.directionIndex===2 || newState.directionIndex===6){
+                                direction = state.y - cannonSpeed
+
                             }
+
                             return { isShooting: true, visible: true, y: 40, weapon: 'left' };
                         }
                         if (keyCodes.indexOf(Key.e) >= 0) {

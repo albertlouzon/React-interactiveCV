@@ -107,7 +107,7 @@ class Cannonball extends Component {
         <div style={{
           display: (this.state.visible) ? "block" : "none",
           position: "absolute",
-          left: this.state.x,
+          right: this.state.x,
           bottom: this.state.y,
           backgroundImage: this.state.canonTypeImg,    
           backgroundSize: "cover",
