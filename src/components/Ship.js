@@ -8,13 +8,19 @@ import PhysicsBody from "./PhysicsBody";
 import Hit from "./Hit";
 import KeyEvent from "./KeyEvent";
 import Input from "../Input"; 
-import {battleFeedback} from '../containers/batte-feedback'
-import { ennemyShipInfo } from "../containers/ennemy_ships";
-import { getPlayerPosition } from "../containers/player_position";
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import HealthBar from './healthBar'
+import { isGameStarted } from "../containers/décor/island";
 
+export let kills
+kills = 0
 const WIDTH = 120;
 const HEIGHT = 120;
+let grossePute = false
+
 
 class Ship extends Component {
   constructor(props) {
@@ -36,10 +42,11 @@ class Ship extends Component {
       playerPosition : {},
       webKitFilter: '',
       filter : '',
-      isDestroyed : false,
+      isDestroyed : this.props.isDestroyed,
       background : "url('../../assets/ship_rotate.png')",
       display:'inline',
-      opacity:1
+      TEPU:'none',
+      open:false
     };
 
     this.update = this.update.bind(this);
@@ -86,12 +93,45 @@ class Ship extends Component {
     Input.key.off("up");
   }
 
+
+  handleClick = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
+
   update() {
-    if(this.state.isDestroyed===true){
+    if(kills==2 && grossePute == false){
+      this.handleClick()
+      grossePute=true
+    }
+
+    if(isGameStarted==true){
+      this.setState({
+        TEPU:'inline',
+      })
+
+    }
+    else if(isGameStarted==false){
+      this.setState({
+        TEPU:'none',
+      })
+
+    }
+    if(this.state.TEPU==='none'){
 
     }else {
       const { onUpdate } = this.props;
       if(this.state.isTouchey == true){
+        if(this.state.hp===0){
+          kills = kills + 1
+        }
         const filter = "brightness(2.5) hue-rotate(-60deg)";
         this.setState({
           webKitFilter : filter,
@@ -116,6 +156,7 @@ class Ship extends Component {
       }
   
       if (this.state.hp == 0){
+
         this.setState({
           hp:'destroyed',
           background : '',
@@ -158,13 +199,15 @@ class Ship extends Component {
       height: HEIGHT,
       filter:this.state.filter,
       webKitFilter : this.state.webKitFilter,
-      opacity:this.state.opacity
+      opacity:this.state.opacity,
+      zIndex:1
 
     };
 
     React.Children.forEach(children, (child) => {
       if (child.type === BlackFlag) {
         styles.backgroundImage ="url('../../assets/ship_pirate.png')";
+        styles.display=this.state.TEPU
       }
 
       if (child.type === Maniatis) {
@@ -201,6 +244,33 @@ class Ship extends Component {
               {children}
             </div>
           </Body>
+
+
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Well played !!!</span>}
+          action={[
+            
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
         </div>
       );
     // }

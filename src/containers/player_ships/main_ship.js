@@ -6,6 +6,7 @@ import Key from '../../Key'
 import { getPlayerPosition, cannonBallPosition, ennemyPosition } from '../player_position'
 import { battleFeedback,battleEnnemyFeedback } from '../batte-feedback'
 
+
 const newState = {}; //for direction index. bot=0 ; right = 2 ; top = 4 ; left = 6
 const cannonSpeed = 3
 let direction
@@ -32,7 +33,7 @@ export default class MainShip extends Component {
 
     render() {
         return (
-            <Ship x={10} y={10} hp={500} onUpdate={function(state){
+            <Ship x={350} y={400} hp={400} onUpdate={function(state){
                 if(battleEnnemyFeedback.XYsuccess==true && state.hp > 0){ 
                     state.hp = state.hp - 1
                     state.isTouchey = true
@@ -172,7 +173,7 @@ export default class MainShip extends Component {
                 }}>
                     <KeyEvent onDown={function (keyCodes, state) {
                         //invoke shooting on pressing these keys
-                        if (keyCodes.indexOf(Key.a) >= 0) {
+                        if (keyCodes.indexOf(Key.q) >= 0) {
                             if(isPlayerShooting===false){
                                 return { isShooting: true, visible: true, y: 40, weapon: 'left' }
                             }
@@ -189,7 +190,7 @@ export default class MainShip extends Component {
                 <KeyEvent onDown={function (keyCodes, state) {
                     const speed = 5
                         
-                    if (keyCodes.indexOf(Key.z) >= 0) {
+                    if (keyCodes.indexOf(Key.w)  >= 0) {
                         newState.y = state.y - speed;
                         if(isPlayerShooting===false){newState.directionIndex = 4;}
                     }
@@ -199,7 +200,7 @@ export default class MainShip extends Component {
                         if(isPlayerShooting===false){newState.directionIndex = 0}
                     }
 
-                    if (keyCodes.indexOf(Key.q) >= 0) {
+                    if (keyCodes.indexOf(Key.a)  >= 0) {
                         newState.x = state.x - speed;
                         if(isPlayerShooting===false){newState.directionIndex = 6}
                     }
@@ -227,7 +228,7 @@ export default class MainShip extends Component {
                     
 
 
-                    if (keyCodes.indexOf(Key.z) >= 0 || keyCodes.indexOf(Key.d) >= 0 || keyCodes.indexOf(Key.q) >= 0 || keyCodes.indexOf(Key.s) >= 0) {
+                    if (keyCodes.indexOf(Key.z) >= 0 || keyCodes.indexOf(Key.d) >= 0 || keyCodes.indexOf(Key.q) >= 0 || keyCodes.indexOf(Key.s) >= 0 ) {
                         getPlayerPosition.y = state.y;
                         getPlayerPosition.x = state.x;
                     }
