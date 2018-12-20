@@ -125,10 +125,13 @@ const styles = theme => ({
         />
           </DialogContent>
           <DialogActions>
+          <a href="cvAlbert2019.pdf" download>
+            <Button color='secondary' >Download CV </Button>
+            </a>
             <Button onClick={this.handleCloseCV} color="primary">
               Go to interactive CV
             </Button>
-           
+
           </DialogActions>
         </Dialog>
 
