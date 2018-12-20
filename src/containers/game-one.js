@@ -6,10 +6,11 @@ import BasicShip from '../containers/ennemies/basic_ship'
 import ManiatisShip from '../containers/ennemies/maniatis_ship'
 import Island, { isGameStarted } from '../containers/décor/island'
 import Tutorial from '../components/Modals/tutorial'
-import { Button } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import GitHubIcon from '@material-ui/icons/WbCloudy'
-
-
+import MobileDisplay from '../components/mobileDisplay'
+import Hidden from '@material-ui/core/Hidden'
+//RAJOUTER REACCT PDF DANS LE NPM
 
 export default class FinalGame extends Component {
 
@@ -41,8 +42,11 @@ export default class FinalGame extends Component {
 
     render() {
         return (
-            <Game>
+            <Grid style={{height:'100vh',width:'100vw'}}>
 
+
+<Hidden smDown>
+            <Game>
                 <Background />
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: 15, flexFlow: 'column no-wrap' }}>
                     <h3> Albert Louzon's interactive CV (ReactJS) </h3>
@@ -50,7 +54,7 @@ export default class FinalGame extends Component {
 
                     <Button variant="contained" color="secondary" onClick={this.onOpening} >
                         GitHub profile
-        <GitHubIcon style={{ marginLeft: '2vh' }} />
+                <GitHubIcon style={{ marginLeft: '2vh' }} />
                     </Button>
 
 
@@ -67,11 +71,25 @@ export default class FinalGame extends Component {
 
                 <MainShip />
                 <BasicShip id={0} x={600} y={500} hp={30} />
-                <BasicShip id={1} x={50} y={550} hp={50} />
+                        <BasicShip id={1} x={50} y={550} hp={50} />
+                    </Game>
 
-            </Game>
+                </Hidden>
+
+                <Hidden mdUp>
+                    <Grid container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"  >
+                        <MobileDisplay />
+                    </Grid>
+                   
+                </Hidden>
+            </Grid>
 
 
+           
         )
     }
 }
+

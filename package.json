@@ -17,6 +17,7 @@
     "react-pdf-js": "^4.0.2",
     "react-scripts": "2.0.4",
     "react-spritesheet": "^1.0.1",
+    "react-swipeable-views": "^0.13.0",
     "spectacle": "^5.2.0"
   },
   "scripts": {
