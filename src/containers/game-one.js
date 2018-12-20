@@ -10,7 +10,7 @@ import { Button, Grid } from '@material-ui/core'
 import GitHubIcon from '@material-ui/icons/WbCloudy'
 import MobileDisplay from '../components/mobileDisplay'
 import Hidden from '@material-ui/core/Hidden'
-//RAJOUTER REACCT PDF DANS LE NPM
+//ameliorer accuracy  / debugger le fait quon puisse pas bouger quand on tire au tout debut
 
 export default class FinalGame extends Component {
 

@@ -36,9 +36,12 @@ TabContainer.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500,
+    width: '100%',
     position: 'relative',
-    minHeight: 200,
+  },
+  cv:{
+    marginLeft:'-10vh',
+    marginTop:'-5vh'
   },
   fab: {
     position: 'absolute',
@@ -107,8 +110,8 @@ class FloatingActionButtonZoom extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
          
-          <TabContainer dir={theme.direction}>
-          <PDF
+          <TabContainer dir={theme.direction} >
+          <PDF className={classes.cv}
           file="cvAlbert2019.pdf"
       
         />
